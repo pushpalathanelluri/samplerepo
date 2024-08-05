@@ -26,7 +26,7 @@ jobs:
 
       - name: Clone internal repository
         run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-org/internal-repo.git internal-repo
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pushpalathanelluri/samplerepo.git internal-repo
 
       - name: Run truffleHog scan on public repo
         run: |
