@@ -1,0 +1,35 @@
+name: TruffleHog Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  trufflehog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      
+      - name: Install truffleHog
+        run: |
+          pip install truffleHog
+
+      - name: Run truffleHog scan
+        run: |
+          trufflehog --entropy=True --json --regex --diff  > trufflehog_report.json
+          
+      - name: Upload truffleHog report
+        uses: actions/upload-artifact@v3
+        with:
+          name: trufflehog-report
+          path: trufflehog_report.json
