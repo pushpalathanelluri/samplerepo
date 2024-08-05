@@ -26,23 +26,19 @@ jobs:
 
       - name: Clone internal repository
         run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pushpalathanelluri/samplerepo.git internal-repo
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pushpalathanelluri/samplerepo.git internal-repo 
 
-     
+      - name: Run truffleHog scan on public repo
+        run: |
+          trufflehog --entropy=True --json --regex https://github.com/pushpalathanelluri/samplerepo.git > trufflehog_public_report.json
+
       - name: Run truffleHog scan on internal repo
         run: |
-          trufflehog git https://github.com/pushpalathanelluri/samplerepo.git > trufflehog_internal_report.json
-
-
+          cd internal-repo
+          trufflehog --entropy=True --json --regex . > ../trufflehog_internal_report.json
 
       - name: Upload public repo truffleHog report
         uses: actions/upload-artifact@v3
         with:
           name: trufflehog-public-report
           path: trufflehog_public_report.json
-
-      - name: Upload internal repo truffleHog report
-        uses: actions/upload-artifact@v3
-        with:
-          name: trufflehog-internal-report
-          path: trufflehog_internal_report.json
