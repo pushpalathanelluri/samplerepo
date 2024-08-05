@@ -31,8 +31,8 @@ jobs:
      
       - name: Run truffleHog scan on internal repo
         run: |
-          cd internal-repo
-          trufflehog --entropy=True --json --regex . > ../trufflehog_internal_report.json
+          trufflehog --entropy=True --json --regex https://github.com/pushpalathanelluri/samplerepo.git > trufflehog_internal_report.json
+
 
 
       - name: Upload public repo truffleHog report
