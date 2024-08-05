@@ -1,4 +1,4 @@
-name: TruffleHog Scan
+ho name: TruffleHog Scan
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
 
       - name: Print truffleHog version
         run: |
-          trufflehog --version
+          echo trufflehog --version
 
       - name: Run truffleHog scan on public repo
         run: |
