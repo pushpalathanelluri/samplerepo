@@ -28,10 +28,7 @@ jobs:
         run: |
           git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pushpalathanelluri/samplerepo.git internal-repo
 
-      - name: Run truffleHog scan on public repo
-        run: |
-          trufflehog --entropy=True --json --regex --repo_path . > trufflehog_public_report.json
-
+     
       - name: Run truffleHog scan on internal repo
         run: |
           trufflehog --entropy=True --json --regex --repo_path internal-repo > trufflehog_internal_report.json
