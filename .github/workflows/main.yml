@@ -31,7 +31,9 @@ jobs:
      
       - name: Run truffleHog scan on internal repo
         run: |
-          trufflehog --entropy=True --json --regex --repo_path internal-repo > trufflehog_internal_report.json
+          cd internal-repo
+          trufflehog --entropy=True --json --regex . > ../trufflehog_internal_report.json
+
 
       - name: Upload public repo truffleHog report
         uses: actions/upload-artifact@v3
