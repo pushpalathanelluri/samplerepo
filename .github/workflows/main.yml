@@ -24,9 +24,15 @@ jobs:
         run: |
           pip install truffleHog
 
-      - name: Run truffleHog scan
-        run: |
-          trufflehog --entropy=True --json --regex https://github.com/pushpalathanelluri/samplerepo > trufflehog_report.json
+      - name: TruffleHog OSS 
+        id: trufflehog 
+        uses: trufflesecurity/trufflehog@add-actions-cli-switch 
+        continue-on-error: true 
+        with: 
+          path: ./ 
+          base: "${{ github.event.repository.default_branch }}" 
+          head: HEAD 
+          extra_args: --debug --only-verified ﻿
       
       - name: Upload truffleHog report
         uses: actions/upload-artifact@v3
