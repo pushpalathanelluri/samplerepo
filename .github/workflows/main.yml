@@ -24,18 +24,26 @@ jobs:
         run: |
           pip install truffleHog
 
-      - name: TruffleHog OSS 
-        id: trufflehog 
-        uses: trufflesecurity/trufflehog@add-actions-cli-switch 
-        continue-on-error: true 
-        with: 
-          path: ./ 
-          base: "${{ github.event.repository.default_branch }}" 
-          head: HEAD 
-          extra_args: --debug --only-verified ﻿
-      
-      - name: Upload truffleHog report
+      - name: Clone internal repository
+        run: |
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-org/internal-repo.git internal-repo
+
+      - name: Run truffleHog scan on public repo
+        run: |
+          trufflehog --entropy=True --json --regex --repo_path . > trufflehog_public_report.json
+
+      - name: Run truffleHog scan on internal repo
+        run: |
+          trufflehog --entropy=True --json --regex --repo_path internal-repo > trufflehog_internal_report.json
+
+      - name: Upload public repo truffleHog report
         uses: actions/upload-artifact@v3
         with:
-          name: trufflehog-report
-          path: trufflehog_report.json
+          name: trufflehog-public-report
+          path: trufflehog_public_report.json
+
+      - name: Upload internal repo truffleHog report
+        uses: actions/upload-artifact@v3
+        with:
+          name: trufflehog-internal-report
+          path: trufflehog_internal_report.json
