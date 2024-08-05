@@ -25,10 +25,14 @@ jobs:
         run: |
           pip install truffleHog
 
+      - name: Print truffleHog version
+        run: |
+          trufflehog --version
+
       - name: Run truffleHog scan on public repo
         run: |
           echo "Running truffleHog scan..."
-          trufflehog --entropy=True --json --regex https://github.com/pushpalathanelluri/samplerepo.git > trufflehog_public_report.json || { echo 'truffleHog failed'; exit 1; }
+          trufflehog --entropy=True --json --regex --repo_path https://github.com/pushpalathanelluri/samplerepo.git > trufflehog_public_report.json || { echo 'truffleHog failed'; exit 1; }
 
       - name: Upload truffleHog report
         uses: actions/upload-artifact@v3
