@@ -9,29 +9,7 @@ on:
       - main
 
 jobs:
-  trufflehog:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout public repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.x'
-      
-      - name: Install truffleHog
-        run: |
-          pip install truffleHog
-
-      - name: Print truffleHog version
-        run: |
-          trufflehog --version
-
-      - name: Print truffleHog help
-        run: |
-          trufflehog --help
+ 
   scanning:
     name: TruffleHog Enterprise scan
     runs-on: ubuntu-latest
